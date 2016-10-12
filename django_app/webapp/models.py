@@ -28,6 +28,8 @@ class DbLogs(models.Model):
 	main_log = models.ForeignKey(DbMain)
 	commands_log = models.ForeignKey(DbCommands)
 	exe = models.ForeignKey(Execute)
+
+
 			
 """
 # Many-to-one relationships
