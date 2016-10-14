@@ -6,6 +6,6 @@ django
 
 ansible
 
-CouchDB
+mysql (in the future -> CouchDB)
 
 AJAX

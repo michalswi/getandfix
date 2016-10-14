@@ -7,16 +7,22 @@ from django.utils import timezone
 
 
 class DbMain(models.Model):
+	id = models.AutoField(primary_key=True)
 	client_name = models.CharField(max_length=30)
 	server_name = models.CharField(max_length=30)
+	
+	def __str__(self):
+		return self.client_name
 
 class DbCommands(models.Model):
+	id = models.AutoField(primary_key=True)
 	cmd = models.CharField(max_length=48)
 	#cmd_date = models.DateField()
 	cmd_date = models.DateTimeField(default = timezone.now)
 	cmd_output = models.TextField()					# json catched from ansible
 	
 class Execute(models.Model):
+	id = models.AutoField(primary_key=True)
 	main = models.ManyToManyField(DbMain)
 	comm = models.ManyToManyField(DbCommands)
 
