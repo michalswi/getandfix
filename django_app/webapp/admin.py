@@ -1,5 +1,7 @@
 from django.contrib import admin
 
-from .models import DbMain
+# https://docs.djangoproject.com/en/1.10/intro/tutorial02/#make-the-poll-app-modifiable-in-the-admin
+# Make the poll app modifiable in the admin
 
-admin.site.register(DbMain)
+#from .models import DbLogs
+#admin.site.register(DbLogs)
