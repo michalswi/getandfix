@@ -12,7 +12,7 @@ class DbClient(models.Model):
 	def __str__(self):
 		return self.client_name
 		
-class DbOS(models.Model):
+class DbSystem(models.Model):
 	id = models.AutoField(primary_key=True)
 	os_platform = models.CharField(max_length=16, null=False)
 
@@ -24,8 +24,8 @@ class DbOS(models.Model):
 class DbServer(models.Model):
 	id = models.AutoField(primary_key=True)
 	
-	client_name_id = models.ForeignKey(DbClient)		# one client -> many servers
-	os_platform_id = models.ForeignKey(DbOS)
+	id_client_name = models.ForeignKey(DbClient)		# one client -> many servers
+	id_os_platform = models.ForeignKey(DbSystem)
 	
 	server_name = models.CharField(max_length=30, null=False)
 	
@@ -33,17 +33,17 @@ class DbServer(models.Model):
 		return self.server_name
 
 #
-class DbCommands(models.Model):
+class DbCommand(models.Model):
 	id = models.AutoField(primary_key=True)
 	
 	cmd = models.CharField(max_length=60, null=False)
-	os_platform_id = models.ForeignKey(DbOS)
+	id_os_platform = models.ForeignKey(DbSystem)
 	
 	def __str__(self):
 		return self.cmd
 
 # no relation
-class DbLogs(models.Model):
+class DbLog(models.Model):
 	id = models.AutoField(primary_key=True)
 	
 	username = models.CharField(max_length=30, null=False)
