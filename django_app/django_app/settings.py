@@ -77,9 +77,13 @@ WSGI_APPLICATION = 'django_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# http://django-mysql.readthedocs.io/en/latest/checks.html -> init_command
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+          'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
         'NAME': 'myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
