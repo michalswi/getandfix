@@ -26,7 +26,6 @@
             <option value="3"> {{ client }} </option>
           </select>
         </li>
-        
         <li>
           <span>Client_test:</span>
           <select class="custom-select">
@@ -38,6 +37,12 @@
         </li>
 
         <li>
+          {% for s in system %}
+            <option value= {{ s.id }}> {{ s }} </option>
+          {% endfor %}
+        </li>
+
+        <li>
           <span>Server:</span>
           <select class="custom-select">
             <option selected>Select server</option>
@@ -46,6 +51,15 @@
             <option value="3">Third</option>
           </select>
         </li>
+
+        <li>
+          <span>Server_test:</span>
+          <select class="custom-select">
+            <option selected>Select server</option>
+            <option value="1">server1</option>
+          </select>
+        </li>
+
         <li>
           <span>Run command:</span>
           <select class="custom-select" id="disabledSelect">

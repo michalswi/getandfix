@@ -6,4 +6,3 @@
 .*.sw[a-z]
 *.un~
 ldap.py
-.gitignore
