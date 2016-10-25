@@ -23,9 +23,20 @@
             <option selected>Select client</option>
             <option value="1">Allianz</option>
             <option value="2">Second</option>
-            <option value="3"> {{client}} </option>
+            <option value="3"> {{ client }} </option>
           </select>
         </li>
+        
+        <li>
+          <span>Client_test:</span>
+          <select class="custom-select">
+            <option selected>Select client</option>
+            {% for c in client %}
+              <option value= {{ c.id }}> {{ c }} </option>
+            {% endfor %}
+          </select>
+        </li>
+
         <li>
           <span>Server:</span>
           <select class="custom-select">
