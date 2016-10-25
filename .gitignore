@@ -5,4 +5,5 @@
 \#*#
 .*.sw[a-z]
 *.un~
-test.txt
+ldap.py
+.gitignore
