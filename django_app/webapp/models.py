@@ -28,6 +28,7 @@ class DbServer(models.Model):
 	id_os_platform = models.ForeignKey(DbSystem)
 	
 	server_name = models.CharField(max_length=30, null=False)
+  	server_ip = models.CharField(max_length=15, null=False)
 	
 	def __str__(self):
 		return self.server_name
@@ -50,6 +51,7 @@ class DbLog(models.Model):
 	
 	client_name = models.CharField(max_length=30, null=False)
 	server_name = models.CharField(max_length=30, null=False)
+	server_ip = models.CharField(max_length=15, null=False)
 		
 	cmd = models.CharField(max_length=60, null=False)
 	# json catched from ansible
