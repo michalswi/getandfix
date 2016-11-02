@@ -1,15 +1,30 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
-    <title>Main page after successfull login</title>
-  </head>
-  <body>
+    <head>
+        <title>Main page after successfull login</title>
+        <meta charset="utf-8">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+
+    <div class="menu">
+    {% block menu %}
+        <ul id="menu">
+            <li class=""> <a href='/webapp' class="">home</a></li>
+            <li class=""> <a href='/webapp/about' class="">about</a></li>
+        </ul>
+        {% endblock menu %}
+    </div>
+
+
     <div id="main">
       <div class="right">
         <strong>Username and surname </strong>
@@ -26,6 +41,7 @@
             <option value="3"> {{ client }} </option>
           </select>
         </li>
+
         <li>
           <span>Client_test:</span>
           <select class="custom-select">
@@ -41,6 +57,32 @@
             <option value= {{ s.id }}> {{ s }} </option>
           {% endfor %}
         </li>
+
+
+
+        <li>
+          <span>Client_test_ajax:</span>
+          <select id="client" class="custom-select">
+            <option selected>Select client</option>
+            {% for c in client %}
+              <option value= {{ c.id }}> {{ c }} </option>
+            {% endfor %}
+          </select>
+        </li>
+
+        <li>
+          <span>Server_test_ajax:</span>
+          <select id="server" class="custom-select" disabled="disabled">
+          </select>
+        </li>
+
+
+        <li>
+          <span>Run_command_ajax:</span>
+          <select id="run_command" class="custom-select"  disabled="disabled">
+          </select>
+        </li>
+
 
         <li>
           <span>Server:</span>
@@ -88,5 +130,27 @@
         </li>
       </ul>
     </div>
-  </body>
+    <script>
+        $(document).ready(function(){
+            $('#client').change(function(){
+                var selected_client = this.value;
+
+
+
+                $.ajax({
+                    'url' : 'ajax_main',
+                    'data' : {
+                        'ajax_data_type' : 'server',
+                        'key' : selected_client
+                    }, success: function(json) {
+                        console.log('a');
+                    }
+                });
+
+
+
+            });
+        });
+    </script>
+    </body>
 </html>

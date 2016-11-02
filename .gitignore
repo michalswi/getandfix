@@ -7,3 +7,4 @@
 *.un~
 ldap.py
 ajax_example
+myproject.sql
