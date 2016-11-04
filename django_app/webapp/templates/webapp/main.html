@@ -130,6 +130,7 @@
         </li>
       </ul>
     </div>
+
     <script>
         $(document).ready(function(){
             $('#client').change(function(){
@@ -140,15 +141,18 @@
                     'data' : {
                         'ajax_data_type' : 'server',
                         'key' : selected_client
-                    }, done(function(json)) {
-                           console.log(json)
-                           var options = '';
-                           for(var i=0;i<json.length;i++) {
-                                options = 'DUPA'
-                                console.log("test")                  
-                           }
-                           console.log(options)
-                           $('#server').removeAttr('disabled').append(options)
+                    }, 
+                    success: function(data) {
+                        console.log(data)
+                        var json = JSON.parse(data);
+                        console.log(json)
+                        var options = '';
+                        for(var i=0;i<json.length;i++) {
+                            options = 'DUPA'
+                            console.log("test")                  
+                        }
+                        console.log(options)
+                        $('#server').removeAttr('disabled').append(options)
                     }
                 });
 
@@ -157,5 +161,6 @@
             });
         });
     </script>
+
     </body>
 </html>

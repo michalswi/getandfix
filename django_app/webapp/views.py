@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext, loader
 
 from webapp.models import DbClient, DbSystem, DbServer
@@ -15,6 +15,8 @@ def main(request):
     client_var = DbClient.objects.all()           # all() -> SELECT * FROM
     system_var = DbSystem.objects.all()
     server_var = DbServer.objects.all()
+
+    print client_var, type(client_var)
     context = {'client': client_var, 'system': system_var, 'server': server_var}  # system: aix/rhel -> not needed to display, only example
     return render(request, 'webapp/main.html', context)
 
@@ -31,10 +33,13 @@ def ajax_main(request):
     server_dic = {}
     for s in list(server_var):
         server_dic[s.id] = s.server_name
+    data = json.dumps(server_dic)
+    print "data----->", data
+    #return HttpResponse(data, content_type="application/json")
+    #return HttpResponse(json.dumps('{"var":"ala ma kota"}'), content_type="application/json")
     
-    return HttpResponse(json.dumps(server_dic), content_type="application/json")
-    #return HttpResponse(json.dumps({"var":"ala ma kota"}), content_type="application/json")
-
+    #return JsonResponse(server_dic, content_type="application/json")
+    return JsonResponse({1:{"var":"ala ma kota"}}, content_type="application/json")
 
 def test(request):
     #return render(request, 'webapp/test.html')
