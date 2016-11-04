@@ -19,10 +19,21 @@ def main(request):
     return render(request, 'webapp/main.html', context)
 
 def ajax_main(request):
-    #return render(request, 'webapp/ajax_main.html', json.dumps("var":"ala ma kota"))
+
+    #server_var = DbServer.objects.values("id_client_name_id", "server_name")
     print "REQUEST--->", request.GET['key']
 
-    return HttpResponse(json.dumps({"var":"ala ma kota"}), content_type="application/json")
+    server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
+ 
+    print "----------VAl--------", server_var
+    # <QuerySet [<DbServer: server11>, <DbServer: server12>]>
+    
+    server_dic = {}
+    for s in list(server_var):
+        server_dic[s.id] = s.server_name
+    
+    return HttpResponse(json.dumps(server_dic), content_type="application/json")
+    #return HttpResponse(json.dumps({"var":"ala ma kota"}), content_type="application/json")
 
 
 def test(request):

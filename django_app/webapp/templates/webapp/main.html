@@ -47,14 +47,14 @@
           <select class="custom-select">
             <option selected>Select client</option>
             {% for c in client %}
-              <option value= {{ c.id }}> {{ c }} </option>
+              <option value="{{ c.id }}">{{ c }}</option>
             {% endfor %}
           </select>
         </li>
 
         <li>
           {% for s in system %}
-            <option value= {{ s.id }}> {{ s }} </option>
+            <option value="{{ s.id }}">{{ s }}</option>
           {% endfor %}
         </li>
 
@@ -65,7 +65,7 @@
           <select id="client" class="custom-select">
             <option selected>Select client</option>
             {% for c in client %}
-              <option value= {{ c.id }}> {{ c }} </option>
+              <option value="{{ c.id }}">{{ c }}</option>
             {% endfor %}
           </select>
         </li>

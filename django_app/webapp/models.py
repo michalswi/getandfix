@@ -9,6 +9,7 @@ import datetime
 class DbClient(models.Model):
 	id = models.AutoField(primary_key=True)
 	client_name = models.CharField(max_length=30, null=False)	# CharField -> varchar
+
 	def __str__(self):
 		return self.client_name
 		
