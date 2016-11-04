@@ -135,15 +135,20 @@
             $('#client').change(function(){
                 var selected_client = this.value;
 
-
-
                 $.ajax({
                     'url' : 'ajax_main',
                     'data' : {
                         'ajax_data_type' : 'server',
                         'key' : selected_client
-                    }, success: function(json) {
-                        console.log('a');
+                    }, done(function(json)) {
+                           console.log(json)
+                           var options = '';
+                           for(var i=0;i<json.length;i++) {
+                                options = 'DUPA'
+                                console.log("test")                  
+                           }
+                           console.log(options)
+                           $('#server').removeAttr('disabled').append(options)
                     }
                 });
 
