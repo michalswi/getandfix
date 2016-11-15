@@ -53,14 +53,6 @@
         </li>
 
         <li>
-          {% for s in system %}
-            <option value="{{ s.id }}">{{ s }}</option>
-          {% endfor %}
-        </li>
-
-
-
-        <li>
           <span>Client_test_ajax:</span>
           <select id="client" class="custom-select">
             <option selected>Select client</option>
@@ -144,20 +136,23 @@
                     },
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data)
-                        //console.log(data[1])
-                        var options = ''
-                        for(var i=0; i<data.length; i++) {
-                            //console.log(data[i])
-                            options = data[i]                          
-                        }
-                        $('#server').removeAttr('disabled').html("<option value='x'>"+options+"</option>")                   
+                        //#                   
                         //console.log(data)
-                        //var options = 'DUPA'
-                        //var idi = "1"
-                        //http://stackoverflow.com/questions/18682573/how-to-use-jquery-variable-into-html
-                        //$('#server').removeAttr('disabled').append('<option value="x">string</option>')
-                        //$('#server').removeAttr('disabled').html("<option value='x'>"+options+"</option>")
+                        //console.log(data[1])
+                        //console.log([1,2].length)
+
+                        var json = data;
+                        var key, value;
+                        var listitems = '';
+                        for (key in json) {
+                            value = json[key]
+                            console.log(value,key)                        
+                            listitems += '<option value="'+key+'">'+value+'</option>'
+                        }
+                        //console.log(listitems)
+                        //empty() to remove previous choice
+                        $('#server').removeAttr('disabled').empty().append(listitems)
+
                      }
 
                 });
