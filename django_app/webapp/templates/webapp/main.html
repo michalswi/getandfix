@@ -32,15 +32,7 @@
       </div>
       <div class="clear"></div>
       <ul id="form-list">
-        <li>
-          <span>Client:</span>
-          <select class="custom-select">
-            <option selected>Select client</option>
-            <option value="1">Allianz</option>
-            <option value="2">Second</option>
-            <option value="3"> {{ client }} </option>
-          </select>
-        </li>
+
 
         <li>
           <span>Client_test:</span>
@@ -68,7 +60,6 @@
           </select>
         </li>
 
-
         <li>
           <span>Run_command_ajax:</span>
           <select id="run_command" class="custom-select"  disabled="disabled">
@@ -83,14 +74,6 @@
             <option value="1">server1</option>
             <option value="2">Second</option>
             <option value="3">Third</option>
-          </select>
-        </li>
-
-        <li>
-          <span>Server_test:</span>
-          <select class="custom-select">
-            <option selected>Select server</option>
-            <option value="1">server1</option>
           </select>
         </li>
 
@@ -127,6 +110,7 @@
         $(document).ready(function(){
             $('#client').change(function(){
                 var selected_client = this.value;
+                console.log(selected_client)
 
                 $.ajax({
                     'url' : 'ajax_main',
@@ -140,26 +124,27 @@
                         //console.log(data)
                         //console.log(data[1])
                         //console.log([1,2].length)
-
-                        var json = data;
                         var key, value;
-                        var listitems = '';
-                        for (key in json) {
-                            value = json[key]
-                            console.log(value,key)                        
-                            listitems += '<option value="'+key+'">'+value+'</option>'
+                        var collectitems = '<option>Select server</option>';
+                        for (key in data) {
+                            value = data[key]
+                            console.log(key, value)                        
+                            collectitems += '<option value="'+key+'">'+value+'</option>'
                         }
                         //console.log(listitems)
                         //empty() to remove previous choice
-                        $('#server').removeAttr('disabled').empty().append(listitems)
-
+                        $('#server').removeAttr('disabled').empty().append(collectitems)
                      }
 
                 });
-
-
-
             });
+
+            $('#server').change(function(){
+                //this.value = id, missing id_os_platform_id
+                var selected_server = this.value;
+                console.log(selected_server)
+            });
+
         });
     </script>
 
