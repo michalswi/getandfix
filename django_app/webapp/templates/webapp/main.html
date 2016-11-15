@@ -141,19 +141,25 @@
                     'data' : {
                         'ajax_data_type' : 'server',
                         'key' : selected_client
-                    }, 
-                    success: function(data) {
+                    },
+                    dataType: 'json',
+                    success: function (data) {
                         console.log(data)
-                        var json = JSON.parse(data);
-                        console.log(json)
-                        var options = '';
-                        for(var i=0;i<json.length;i++) {
-                            options = 'DUPA'
-                            console.log("test")                  
+                        //console.log(data[1])
+                        var options = ''
+                        for(var i=0; i<data.length; i++) {
+                            //console.log(data[i])
+                            options = data[i]                          
                         }
-                        console.log(options)
-                        $('#server').removeAttr('disabled').append(options)
-                    }
+                        $('#server').removeAttr('disabled').html("<option value='x'>"+options+"</option>")                   
+                        //console.log(data)
+                        //var options = 'DUPA'
+                        //var idi = "1"
+                        //http://stackoverflow.com/questions/18682573/how-to-use-jquery-variable-into-html
+                        //$('#server').removeAttr('disabled').append('<option value="x">string</option>')
+                        //$('#server').removeAttr('disabled').html("<option value='x'>"+options+"</option>")
+                     }
+
                 });
 
 

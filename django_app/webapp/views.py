@@ -38,8 +38,9 @@ def ajax_main(request):
     #return HttpResponse(data, content_type="application/json")
     #return HttpResponse(json.dumps('{"var":"ala ma kota"}'), content_type="application/json")
     
-    #return JsonResponse(server_dic, content_type="application/json")
-    return JsonResponse({1:{"var":"ala ma kota"}}, content_type="application/json")
+    # JsonResponse takes dict not json
+    return JsonResponse(server_dic, content_type="application/json")
+    #return JsonResponse({1:{"var":"ala ma kota"}}, content_type="application/json")
 
 def test(request):
     #return render(request, 'webapp/test.html')
