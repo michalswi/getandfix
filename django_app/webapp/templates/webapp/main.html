@@ -91,6 +91,63 @@
             $('#client').change(function(){
                 input_data = {
                     'ajax_data_type' : 'server',
+                    //'key' : $('#client' option:selected).val() 
+                    'key' : this.value
+                }
+                if (parseInt(input_data.key) > 0){
+                    $.ajax({
+                        'url' : 'ajax_main',
+                        'data' : input_data,
+                        dataType: 'json',
+                        success: function (json) {
+                            var
+                                key,
+                                value,
+                                collectitems = '<option value="0" selected>Select server</option>';
+                            for (key in json) {
+                                value = json[key]
+                                collectitems += '<option value="' + key + '" class="os-' + json[key].os + '">' + json[key].name + ' (' + json[key].ip + ')</option>'
+                            }
+                            //empty() to remove previous choice
+                            $('#server').removeAttr('disabled').empty().append(collectitems)
+                        }
+                    });
+                }
+            });
+            $('#server').change(function(){
+                input_data = {
+                    'ajax_data_type' : 'command',
+                    'key' : $('#server option:selected').attr('class').split('-')[1]
+                }
+                console.log(input_data)
+
+                if (parseInt(input_data.key) > 0) {
+                    $.ajax({
+                        'url' : 'ajax_main',
+                        'data' : input_data,
+                        dataType: 'json',
+                        success: function (json) {
+                            console.log(json)
+                            var
+                              key,
+                              value,
+                              collectitems = '<option value="0" selected>Select command</option>';
+                            for (key in json) {
+                                value = json[key]
+                                collectitems += '<option value="' + key + '">' + json[key] + '</option>'
+                            }
+                            //console.log(collectitems)
+                            $('#run_command').removeAttr('disabled').empty().append(collectitems)
+                         }
+                    });
+                }
+            });
+        });
+        /*
+        $(document).ready(function(){
+            $('#client').change(function(){
+                input_data = {
+                    'ajax_data_type' : 'server',
                     'key' : this.value
                 }
                 run_ajax(input_data, '#server');        
@@ -131,44 +188,8 @@
                 });
             }
         }
-        /*
-        $(document).ready(function(){
-            $('#client').change(function(){
-                var selected_client = this.value;
-                console.log(selected_client)
-                $.ajax({
-                    'url' : 'ajax_main',
-                    'data' : {
-                        'ajax_data_type' : 'server',
-                        'key' : selected_client
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        //#                   
-                        //console.log(data)
-                        //console.log(data[1])
-                        //console.log([1,2].length)
-                        var key, value;
-                        var collectitems = '<option>Select server</option>';
-                        for (key in data) {
-                            value = data[key]
-                            console.log(key, value)                        
-                            collectitems += '<option value="'+key+'">'+value+'</option>'
-                            //collectitems += '<option>'+value+'</option>'
-                        }
-                        //console.log(listitems)
-                        //empty() to remove previous choice
-                        $('#server').removeAttr('disabled').empty().append(collectitems)
-                     }
-                });
-            });
-            $('#server').change(function(){
-                //this.value = id, missing id_os_platform_id
-                var selected_server = this.value;
-                console.log(selected_server)
-            });
-        });
         */
+
     </script>
 
     </body>
