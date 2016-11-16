@@ -16,28 +16,38 @@ def main(request):
     system_var = DbSystem.objects.all()
     server_var = DbServer.objects.all()
 
-    print client_var, type(client_var)
+    #print client_var, type(client_var)
     context = {'client': client_var, 'system': system_var, 'server': server_var}  # system: aix/rhel -> not needed to display, only example
     return render(request, 'webapp/main.html', context)
 
 def ajax_main(request):
 
     print "REQUEST--->", request.GET['key']
+    print 'req ->', request.GET['ajax_data_type']
 
     #server_var = DbServer.objects.values("id_client_name_id", "server_name")
 
-    server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
+    #server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
     #print server_var
     #<QuerySet [<DbServer: server11>, <DbServer: server12>]>
 
+    """
     server_dic = {}
-
     for s in list(server_var):
         server_dic[s.id] = s.server_name
     #data = json.dumps(server_dic)
-    data = server_dic
     print "data----->", data
-    
+    """
+    server_dic = {}
+    ## request.GET['ajax_data_type'] related to select custom in html
+    if request.GET['ajax_data_type'] == 'server':
+        server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
+        for s in list(server_var):
+            server_dic[s.id] = {'name' : s.server_name, 'ip' : s.server_ip, 'os' : s.id_os_platform_id}
+    else:       # request.GET['ajax_data_type'] == 'command'
+        pass
+
+    print server_dic
     ## JsonResponse takes dict not json
     return JsonResponse(server_dic, content_type="application/json")
     #return JsonResponse({1:{"var":"ala ma kota"}}, content_type="application/json")

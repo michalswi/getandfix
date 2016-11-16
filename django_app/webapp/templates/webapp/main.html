@@ -87,7 +87,47 @@
     </div>
 
     <script>
+        $(document).ready(function(){
+            $('#client').change(function(){
+                input_data = {
+                    'ajax_data_type' : 'server',
+                    'key' : this.value
+                }
+                run_ajax(input_data, '#server');        
+            });
 
+            $('#server').change(function(){
+                input_data = {
+                    'ajax_data_type' : 'command',
+                    'key' : this.value
+                }
+                run_ajax(input_data, '#run_command');
+            });
+        });
+
+        function run_ajax(input_data, outputElem) {
+            if (parseInt(input_data.key) > 0) {
+                $.ajax({
+                    'url' : 'ajax_main',
+                    'data' : input_data,
+                    dataType: 'json',
+                    success: function (json) {
+                        var
+                            key,
+                            value,
+                            collectitems = '<option>Select server</option>';
+                        console.log(json)
+                        for (key in json) {
+                            value = json[key]
+                            //listitems += '<option value="' + key + '">' + json[key].name + ' (' + json[key].ip + ')</option>'
+                            collectitems += '<option value="'+key+'">'+value+'</option>'
+                        }
+                        $(outputElem).removeAttr('disabled').empty().append(collectitems)
+                     }
+                });
+            }
+        }
+        /*
         $(document).ready(function(){
             $('#client').change(function(){
                 var selected_client = this.value;
@@ -124,6 +164,7 @@
                 console.log(selected_server)
             });
         });
+        */
     </script>
 
     </body>
