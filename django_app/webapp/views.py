@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext, loader
 
-from webapp.models import DbClient, DbSystem, DbServer
+from webapp.models import DbClient, DbSystem, DbServer, DbCommand
 
 import datetime
 import json
@@ -31,25 +31,27 @@ def ajax_main(request):
     #print server_var
     #<QuerySet [<DbServer: server11>, <DbServer: server12>]>
 
-    server_dic = {}
-    command_dic = {}
+    #server_dic = {}
+    #command_dic = {}
+    data = {}
     ## request.GET['ajax_data_type'] related to select custom in html
     if request.GET['ajax_data_type'] == 'server':
         server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
         for s in list(server_var):
-            server_dic[s.id] = {'name' : s.server_name, 'ip' : s.server_ip, 'os' : s.id_os_platform_id}
+            #server_dic[s.id] = {'name' : s.server_name, 'ip' : s.server_ip, 'os' : s.id_os_platform_id}
+            data[s.id] = {'name' : s.server_name, 'ip' : s.server_ip, 'os' : s.id_os_platform_id}
 
     elif request.GET['ajax_data_type'] == 'command':
         command_var = DbCommand.objects.filter(id_os_platform_id = int(request.GET['key']))
         for c in list(command_var):
-            command_dic[c.id] = c.cmd
+            #command_dic[c.id] = c.cmd
+            data[c.id] = c.cmd
 
-    print server_dic
+    print data
+
     ## JsonResponse takes dict not json
-    return JsonResponse(server_dic, content_type="application/json")
-    #return JsonResponse({1:{"var":"ala ma kota"}}, content_type="application/json")
-    #return HttpResponse(data, content_type="application/json")
-    #return HttpResponse(json.dumps('{"var":"ala ma kota"}'), content_type="application/json")
+    return JsonResponse(data, content_type="application/json")
+    #return HttpResponse(json.dumps(data), content_type="application/json")
 
 def test(request):
     #return render(request, 'webapp/test.html')
