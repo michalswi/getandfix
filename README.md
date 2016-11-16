@@ -1,6 +1,6 @@
 # django_project
 
-1. create models
+create models
 
 django
 
