@@ -31,21 +31,18 @@ def ajax_main(request):
     #print server_var
     #<QuerySet [<DbServer: server11>, <DbServer: server12>]>
 
-    """
     server_dic = {}
-    for s in list(server_var):
-        server_dic[s.id] = s.server_name
-    #data = json.dumps(server_dic)
-    print "data----->", data
-    """
-    server_dic = {}
+    command_dic = {}
     ## request.GET['ajax_data_type'] related to select custom in html
     if request.GET['ajax_data_type'] == 'server':
         server_var = DbServer.objects.filter(id_client_name_id = int(request.GET['key']))
         for s in list(server_var):
             server_dic[s.id] = {'name' : s.server_name, 'ip' : s.server_ip, 'os' : s.id_os_platform_id}
-    else:       # request.GET['ajax_data_type'] == 'command'
-        pass
+
+    elif request.GET['ajax_data_type'] == 'command':
+        command_var = DbCommand.objects.filter(id_os_platform_id = int(request.GET['key']))
+        for c in list(command_var):
+            command_dic[c.id] = c.cmd
 
     print server_dic
     ## JsonResponse takes dict not json

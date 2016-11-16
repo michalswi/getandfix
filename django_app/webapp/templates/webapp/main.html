@@ -44,7 +44,7 @@
             <li>
                 <span>Client:</span>
                 <select id="client" class="custom-select">
-                    <option key="0" selected>Select client</option>
+                    <option value="0" selected>Select client</option>
                     {% for c in client %}
                         <option value="{{ c.id }}">{{ c }}</option>
                     {% endfor %}
@@ -97,6 +97,7 @@
             });
 
             $('#server').change(function(){
+                //console.log(this.value)
                 input_data = {
                     'ajax_data_type' : 'command',
                     'key' : this.value
@@ -112,13 +113,16 @@
                     'data' : input_data,
                     dataType: 'json',
                     success: function (json) {
+                        //console.log(json)
                         var
                             key,
                             value,
                             collectitems = '<option>Select server</option>';
-                        console.log(json)
+                        //console.log(json)
                         for (key in json) {
                             value = json[key]
+                            console.log(value)  //{ ip: "2.1.1.1", os: 1, name: "server21" }
+                        
                             //listitems += '<option value="' + key + '">' + json[key].name + ' (' + json[key].ip + ')</option>'
                             collectitems += '<option value="'+key+'">'+value+'</option>'
                         }
