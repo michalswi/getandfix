@@ -35,6 +35,7 @@ def ajax_main(request):
     for s in list(server_var):
         server_dic[s.id] = s.server_name
     #data = json.dumps(server_dic)
+    data = server_dic
     print "data----->", data
     
     ## JsonResponse takes dict not json
