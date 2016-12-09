@@ -59,6 +59,7 @@ $(document).ready(function(){
         button_state();
       }
     });
+
     $('#run_command').change(function(){
       button_state();
     });
@@ -94,8 +95,21 @@ $(document).ready(function(){
         $('#li-output-label').hide();        
       }
     }
+    //RUN BUTTON
+    //$('#run_button').click(function(){
+    //  $('#command-form')[0].submit();
+    //});
 
-    $('#run_button').click(function(){
-      $('#command-form')[0].submit();
+    //doesnt work like I expect
+    $('#run_button').click(function(){ 
+      $.ajax({
+        'type' : 'post',
+        'url' : 'ajax_main',
+        //'data' : $('#command-form')[0].submit(),
+        success: function() {
+          alert('done')
+        }
+      });
     });
+
 });
