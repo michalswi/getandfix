@@ -94,4 +94,8 @@ $(document).ready(function(){
         $('#li-output-label').hide();        
       }
     }
+
+    $('#run_button').click(function(){
+      $('#command-form')[0].submit();
+    });
 });

@@ -42,31 +42,32 @@
             <pre id="preview"></pre>
           </div>
         </div>
-
-        <ul id="form-list">
-          <li>
-            <span>Client</span>
-            <select id="client" class="custom-select">
-              <option value="0" selected>select client</option>
-              {% for c in client %}
-                <option value="{{ c.id }}">{{ c }}</option>
-              {% endfor %}
-            </select>
-          </li>
-          <li>
-            <span>Server</span>
-            <select id="server" class="custom-select" disabled="disabled">
-            </select>
-          </li>
-          <li>
-            <span>Run command</span>
-            <select id="run_command" class="custom-select"  disabled="disabled">
-            </select>
-          </li>
-          <li>
-            <span></span>
-            <button type="button" class="btn btn-primary btn-lg disable" id="run_button">run</button>
-          </li>
+        <form action="" method="post" id="command-form">{% csrf_token %}
+          <ul id="form-list">
+            <li>
+              <span>Client</span>
+              <select id="client" class="custom-select" name="client_num">
+                <option value="0" selected>select client</option>
+                {% for c in client %}
+                  <option value="{{ c.id }}">{{ c }}</option>
+                {% endfor %}
+              </select>
+            </li>
+            <li>
+              <span>Server</span>
+              <select id="server" class="custom-select" disabled="disabled" name="server_num">
+              </select>
+            </li>
+            <li>
+              <span>Run command</span>
+              <select id="run_command" class="custom-select"  disabled="disabled" name="command_num">
+              </select>
+            </li>
+            <li>
+              <span></span>
+              <button type="button" class="btn btn-primary btn-lg disable" id="run_button">run</button>
+            </li>
+          </form>
           <li id="li-progress">
             <span id="command-span">Command progress</span>
             <progress class="progress progress-striped" value="75" max="100">75%</progress>

@@ -16,6 +16,10 @@ def main(request):
     system_var = DbSystem.objects.all()
     server_var = DbServer.objects.all()
 
+    # csrf_token related
+    # main.html: to display which client was selected added: name="client_num"
+    print request.POST      # <QueryDict...
+
     #print client_var, type(client_var)
     context = {'client': client_var, 'system': system_var, 'server': server_var}  # system: aix/rhel -> not needed to display, only example
     return render(request, 'webapp/main.html', context)
