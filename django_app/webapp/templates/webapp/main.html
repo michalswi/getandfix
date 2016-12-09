@@ -9,188 +9,78 @@
 
         <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/functions.js' %}"></script>
 
         <meta name="viewport" content = "width=device-width, initial-scale=1.0">
     </head>
 
     <body>
 
-    <div class="menu">
-    {% block menu %}
-
+      <div class="menu">
+      {% block menu %}
         <nav class="navbar navbar-dark bg-primary">
-            <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a href="webapp/" class="nav-link">home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="about/" class="nav-link">about</a>
-                </li>
-                <li class="float-xs-right right">
-                    <strong>Name Surname </strong>
-                    <button class="btn btn-outline-secondary" type="submit">logout</button>
-                </li/>
-            </ul>
+          <ul class="nav navbar-nav">
+            <li class="nav-item active">
+              <a href="/webapp" class="nav-link">home</a>
+            </li>
+            <li class="nav-item">
+              <a href="/about" class="nav-link">about</a>
+            </li>
+            <li class="float-xs-right right">
+              <em>Username Surname </em>
+              <button class="btn btn-outline-secondary" type="submit">logout</button>
+            </li/>
+          </ul>
         </nav>
-
-    {% endblock menu %}
-    </div>
-
-
-    <div id="main">
+          {% endblock menu %}
+      </div>
+      <div id="main">
         <div class="clear"></div>
+        <div class="right">
+          <div class="preview_div">
+            <span>Command preview</span>
+            <pre id="preview"></pre>
+          </div>
+        </div>
+
         <ul id="form-list">
-
-            <li>
-                <span>Client:</span>
-                <select id="client" class="custom-select">
-                    <option value="0" selected>Select client</option>
-                    {% for c in client %}
-                        <option value="{{ c.id }}">{{ c }}</option>
-                    {% endfor %}
-                </select>
-            </li>
-
-            <li>
-                <span>Server:</span>
-                <select id="server" class="custom-select" disabled="disabled">
-                </select>
-            </li>
-
-            <li>
-                <span>Command:</span>
-                <select id="run_command" class="custom-select"  disabled="disabled">
-                </select>
-            </li>
-
-
-            <li>
-                <span></span>
-                <button type="button" class="btn btn-primary btn-lg">run</button>
-            </li>
-
-            <li>
-                <span id="command-span">Command progress:</span>
-                <progress class="progress progress-striped" value="75" max="100">75%</progress>
-            <li>
-                <span>Output:</span>
-            </li>
-
-            <li>
-                <pre>[hostname]$ free -m
-                      total        used        free      shared  buff/cache   available
-                Mem:           7685        3691         316         859        3678        2745
-                Swap:          8191         347        7844
-                </pre>
-            </li>
+          <li>
+            <span>Client</span>
+            <select id="client" class="custom-select">
+              <option value="0" selected>select client</option>
+              {% for c in client %}
+                <option value="{{ c.id }}">{{ c }}</option>
+              {% endfor %}
+            </select>
+          </li>
+          <li>
+            <span>Server</span>
+            <select id="server" class="custom-select" disabled="disabled">
+            </select>
+          </li>
+          <li>
+            <span>Run command</span>
+            <select id="run_command" class="custom-select"  disabled="disabled">
+            </select>
+          </li>
+          <li>
+            <span></span>
+            <button type="button" class="btn btn-primary btn-lg disable" id="run_button">run</button>
+          </li>
+          <li id="li-progress">
+            <span id="command-span">Command progress</span>
+            <progress class="progress progress-striped" value="75" max="100">75%</progress>
+          <li id="li-output-label">
+            <span>Output</span>
+          </li>
+          <li id="li-output">
+            <pre>[hostname]$ free -m
+                    total        used        free      shared  buff/cache   available
+      Mem:           7685        3691         316         859        3678        2745
+      Swap:          8191         347        7844
+            </pre>
+          </li>
         </ul>
-    </div>
-
-    <script>
-        $(document).ready(function(){
-            $('#client').change(function(){
-                input_data = {
-                    'ajax_data_type' : 'server',
-                    //'key' : $('#client' option:selected).val() 
-                    'key' : this.value
-                }
-                if (parseInt(input_data.key) > 0){
-                    $.ajax({
-                        'url' : 'ajax_main',
-                        'data' : input_data,
-                        dataType: 'json',
-                        success: function (json) {
-                            var
-                                key,
-                                value,
-                                collectitems = '<option value="0" selected>Select server</option>';
-                            for (key in json) {
-                                value = json[key]
-                                collectitems += '<option value="' + key + '" class="os-' + json[key].os + '">' + json[key].name + ' (' + json[key].ip + ')</option>'
-                            }
-                            //empty() to remove previous choice
-                            $('#server').removeAttr('disabled').empty().append(collectitems)
-                        }
-                    });
-                }
-            });
-            $('#server').change(function(){
-                input_data = {
-                    'ajax_data_type' : 'command',
-                    'key' : $('#server option:selected').attr('class').split('-')[1]
-                }
-                console.log(input_data)
-
-                if (parseInt(input_data.key) > 0) {
-                    $.ajax({
-                        'url' : 'ajax_main',
-                        'data' : input_data,
-                        dataType: 'json',
-                        success: function (json) {
-                            console.log(json)
-                            var
-                              key,
-                              value,
-                              collectitems = '<option value="0" selected>Select command</option>';
-                            for (key in json) {
-                                value = json[key]
-                                collectitems += '<option value="' + key + '">' + json[key] + '</option>'
-                            }
-                            //console.log(collectitems)
-                            $('#run_command').removeAttr('disabled').empty().append(collectitems)
-                         }
-                    });
-                }
-            });
-        });
-        /*
-        $(document).ready(function(){
-            $('#client').change(function(){
-                input_data = {
-                    'ajax_data_type' : 'server',
-                    'key' : this.value
-                }
-                run_ajax(input_data, '#server');        
-            });
-
-            $('#server').change(function(){
-                //console.log(this.value)
-                input_data = {
-                    'ajax_data_type' : 'command',
-                    'key' : this.value
-                }
-                run_ajax(input_data, '#run_command');
-            });
-        });
-
-        function run_ajax(input_data, outputElem) {
-            if (parseInt(input_data.key) > 0) {
-                $.ajax({
-                    'url' : 'ajax_main',
-                    'data' : input_data,
-                    dataType: 'json',
-                    success: function (json) {
-                        //console.log(json)
-                        var
-                            key,
-                            value,
-                            collectitems = '<option>Select server</option>';
-                        //console.log(json)
-                        for (key in json) {
-                            value = json[key]
-                            console.log(value)  //{ ip: "2.1.1.1", os: 1, name: "server21" }
-                        
-                            //listitems += '<option value="' + key + '">' + json[key].name + ' (' + json[key].ip + ')</option>'
-                            collectitems += '<option value="'+key+'">'+value+'</option>'
-                        }
-                        $(outputElem).removeAttr('disabled').empty().append(collectitems)
-                     }
-                });
-            }
-        }
-        */
-
-    </script>
-
+      </div>
     </body>
 </html>

@@ -18,6 +18,7 @@ body {
 ul#form-list {
   margin-top: 60px;
   list-style: none;
+  width: 600px;
 }
 #form-list li{
   margin-bottom: 40px;
@@ -36,7 +37,7 @@ ul#form-list {
   max-width: 600px;
   margin-left: 289px;
 }
-#form-list li pre {
+#form-list li pre, #preview {
   display: block;
   font-family: monospace;
   padding: 9.5px;
@@ -55,5 +56,22 @@ ul#form-list {
 }
 #login {
   width: 800px;
-  margin: 300px auto;  
+  margin: 300px auto;
+}
+#run_button.disable {
+  cursor: not-allowed;
+  color: #818a91;
+  background-color: #eceeef;
+  border: 1px solid rgba(0,0,0,.15);
+}
+#li-progress, #li-output, #li-output-label {
+  display: none;
+}
+.preview_div {
+  width: 600px;
+  display: none;
+}
+#form-list li pre {
+  width: 1000px;
+  margin-left: 288px;
 }
