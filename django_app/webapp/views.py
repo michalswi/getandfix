@@ -18,9 +18,6 @@ def main(request):
 
     # csrf_token related
     # main.html: to display which client was selected added: name="client_num"
-    print request.POST
-    # <QueryDict: {u'csrfmiddlewaretoken': [u'7hvLFGsa7Samzl89vjCDm0rMb4d1zXeG1FEnDhIIne3opFIV7lKQDpwFhbI9jYpA'], u'client_num': [u'2'], u'server_num': [u'4'], u'command_num': [u'4']}>
-
 
     #print client_var, type(client_var)
     context = {'client': client_var, 'system': system_var, 'server': server_var}  # system: aix/rhel -> not needed to display, only example
@@ -61,6 +58,7 @@ def ajax_main(request):
 
 def ajax_run(request):
     print 'req ->', request.GET
+    #req -> <QueryDict: {u'command_val': [u'6'], u'server_val': [u'2'], u'client_val': [u'1']}>
     return JsonResponse(request.GET, content_type="application/json")
 
 def test(request):

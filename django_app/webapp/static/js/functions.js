@@ -99,8 +99,6 @@ $(document).ready(function(){
     //$('#run_button').click(function(){
     //  $('#command-form')[0].submit();
     //});
-
-    //doesnt work like I expect
     $('#run_button').click(function(){ 
       var
       client = $('#client option:selected'),

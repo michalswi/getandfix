@@ -8,3 +8,4 @@
 ldap.py
 ajax_example
 myproject.sql
+ansible_django/os/.vagrant

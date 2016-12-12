@@ -1,0 +1,13 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.network "private_network", ip: "192.168.66.6"
+  config.vm.define "test_node"
+  config.vm.hostname = "test.example.com"
+  config.vm.provider "libvirt" do |l|
+    l.memory = 256
+    l.cpus = 1
+  end
+end
