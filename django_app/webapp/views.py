@@ -57,9 +57,10 @@ def ajax_main(request):
     #return HttpResponse(json.dumps(data), content_type="application/json")
 
 def ajax_run(request):
-    print 'req ->', request.GET
+    print 'ajax_run:', request.GET
     #req -> <QueryDict: {u'command_val': [u'6'], u'server_val': [u'2'], u'client_val': [u'1']}>
-    return JsonResponse(request.GET, content_type="application/json")
+    data = "for example lsvg output as a text"
+    return HttpResponse(data, content_type='text/plain')
 
 def test(request):
     #return render(request, 'webapp/test.html')

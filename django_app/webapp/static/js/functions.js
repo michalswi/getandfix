@@ -115,7 +115,10 @@ $(document).ready(function(){
           'command_val' : command_val
         },
         //dataType: 'json',
-        success: function (json) {}
+        success: function (text) {
+          // add .empty, to avoid appending
+          $('#li-output').html('<pre>' + text + '</pre>');
+        }
       });
     });
 
