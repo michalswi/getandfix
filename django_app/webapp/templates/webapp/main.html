@@ -42,7 +42,6 @@
             <pre id="preview"></pre>
           </div>
         </div>
-        <form action="" method="post" id="command-form">{% csrf_token %}
           <ul id="form-list">
             <li>
               <span>Client</span>
@@ -67,7 +66,6 @@
               <span></span>
               <button type="button" class="btn btn-primary btn-lg disable" id="run_button">run</button>
             </li>
-          </form>
           <li id="li-progress">
             <span id="command-span">Command progress</span>
             <progress class="progress progress-striped" value="75" max="100">75%</progress>

@@ -59,6 +59,10 @@ def ajax_main(request):
     return JsonResponse(data, content_type="application/json")
     #return HttpResponse(json.dumps(data), content_type="application/json")
 
+def ajax_run(request):
+    print 'req ->', request.GET
+    return JsonResponse(request.GET, content_type="application/json")
+
 def test(request):
     #return render(request, 'webapp/test.html')
 

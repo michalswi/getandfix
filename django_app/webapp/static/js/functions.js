@@ -102,14 +102,22 @@ $(document).ready(function(){
 
     //doesnt work like I expect
     $('#run_button').click(function(){ 
+      var
+      client = $('#client option:selected'),
+      server = $('#server option:selected'),
+      command = $('#run_command option:selected'),
+      client_val = parseInt(client.val()),
+      server_val = parseInt(server.val()),
+      command_val = parseInt(command.val());
       $.ajax({
-        'type' : 'post',
-        'url' : 'ajax_main',
-        //'data' : $('#command-form')[0].submit(),
-        complete: function() {
-          //alert('done')
-          $('#command-form')[0].submit()
-        }
+        'url' : 'ajax_run',
+        'data' : {
+          'client_val' : client_val,
+          'server_val' : server_val,
+          'command_val' : command_val
+        },
+        //dataType: 'json',
+        success: function (json) {}
       });
     });
 
