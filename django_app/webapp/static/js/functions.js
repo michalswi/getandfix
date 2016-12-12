@@ -106,8 +106,9 @@ $(document).ready(function(){
         'type' : 'post',
         'url' : 'ajax_main',
         //'data' : $('#command-form')[0].submit(),
-        success: function() {
-          alert('done')
+        complete: function() {
+          //alert('done')
+          $('#command-form')[0].submit()
         }
       });
     });
