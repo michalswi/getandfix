@@ -4,6 +4,8 @@ from django.template import RequestContext, loader
 
 from webapp.models import DbClient, DbSystem, DbServer, DbCommand
 
+from ansible_django.ans_exe import get_ajax
+
 import datetime
 import json
 
@@ -57,8 +59,9 @@ def ajax_main(request):
     #return HttpResponse(json.dumps(data), content_type="application/json")
 
 def ajax_run(request):
-    print 'ajax_run:', request.GET
-    #req -> <QueryDict: {u'command_val': [u'6'], u'server_val': [u'2'], u'client_val': [u'1']}>
+    print 'ajax_run:', request.GET.items()
+    #ajax_run: [(u'command_val', u'4'), (u'server_val', u'1'), (u'client_val', u'1')]
+    get_ajax(request.GET.items())
     data = "for example lsvg output as a text"
     return HttpResponse(data, content_type='text/plain')
 
