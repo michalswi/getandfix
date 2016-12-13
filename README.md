@@ -1,11 +1,3 @@
 # django_project
 
-create models
-
-django
-
-ansible
-
-mysql (in the future -> CouchDB)
-
-AJAX
+run specific command for specific client/server, use for that ansible
