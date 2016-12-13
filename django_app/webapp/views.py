@@ -61,8 +61,8 @@ def ajax_main(request):
 def ajax_run(request):
     print 'ajax_run:', request.GET.items()
     #ajax_run: [(u'command_val', u'4'), (u'server_val', u'1'), (u'client_val', u'1')]
-    get_ajax(request.GET.items())
-    data = "for example lsvg output as a text"
+    data = get_ajax(request.GET.items())
+    #data = "for example lsvg output as a text"
     return HttpResponse(data, content_type='text/plain')
 
 def test(request):

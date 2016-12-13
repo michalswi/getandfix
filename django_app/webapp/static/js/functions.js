@@ -81,7 +81,7 @@ $(document).ready(function(){
         command_val !== NaN && command_val > 0) {
           $('.preview_div').show();
           $('#preview').empty().append(command_preview);
-          $('#li-progress').show();
+          //$('#li-progress').show();
           $('#li-output').show();
           $('#li-output-label').show();
         if($('#run_button').hasClass('disable'))
@@ -90,7 +90,7 @@ $(document).ready(function(){
         $('#run_button').addClass('disable');
         $('.preview_div').hide();
         $('#preview').empty();
-        $('#li-progress').hide();
+        //$('#li-progress').hide();
         $('#li-output').hide();
         $('#li-output-label').hide();        
       }
@@ -107,6 +107,9 @@ $(document).ready(function(){
       client_val = parseInt(client.val()),
       server_val = parseInt(server.val()),
       command_val = parseInt(command.val());
+
+      
+
       $.ajax({
         'url' : 'ajax_run',
         'data' : {
@@ -114,12 +117,20 @@ $(document).ready(function(){
           'server_val' : server_val,
           'command_val' : command_val
         },
-        //dataType: 'json',
         success: function (text) {
-          // add .empty, to avoid appending
-          $('#li-output').html('<pre>' + text + '</pre>');
+          var
+          microsec = 20, //microseconds e.g: 100 * 40 = 4s progress animation
+          i = 0,
+          interval = setInterval(function() {
+            $('progress').val(i);
+            if (i == 100) {
+              clearInterval(interval);
+              // add .empty, to avoid appending
+              $('#li-output').html('<pre>' + text + '</pre>');
+            }
+            i++;
+          }, microsec);
         }
       });
     });
-
 });

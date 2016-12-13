@@ -64,7 +64,7 @@ ul#form-list {
   background-color: #eceeef;
   border: 1px solid rgba(0,0,0,.15);
 }
-#li-progress, #li-output, #li-output-label {
+#li-output, #li-output-label {
   display: none;
 }
 .preview_div {
