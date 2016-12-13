@@ -1,32 +1,15 @@
 #!/usr/bin/env python
 
-#from ...models import DbClient, DbSystem, DbServer, DbCommand, DbLog
+import os
+from webapp.models import DbClient, DbSystem, DbServer, DbCommand, DbLog
 
 def get_ajax(n):
-  print n 
-  return """
-192.168.66.6 | SUCCESS | rc=0 >>
-Architecture:          x86_64                                                                                                                              
-CPU op-mode(s):        32-bit, 64-bit                                                                                                                      
-Byte Order:            Little Endian                                                                                                                       
-CPU(s):                1
-On-line CPU(s) list:   0
-Thread(s) per core:    1
-Core(s) per socket:    1
-Socket(s):             1
-NUMA node(s):          1
-Vendor ID:             GenuineIntel
-CPU family:            6
-Model:                 61
-Model name:            Intel Core Processor (Broadwell)
-Stepping:              2
-CPU MHz:               2496.004
-BogoMIPS:              4992.00
-Virtualization:        VT-x
-Hypervisor vendor:     KVM
-Virtualization type:   full
-L1d cache:             32K
-L1i cache:             32K
-L2 cache:              4096K
-NUMA node0 CPU(s):     0
-"""
+  n.sort()
+  print n
+  n1 = DbClient.objects.get(id=1) 
+  n2 = DbServer.objects.get(id=int(n[2][1]))
+  print n2
+  n3 = DbCommand.objects.get(id=int(n[1][1]))
+  print n3
+  f = os.popen("ansible -i django_app/webapp/ansible_django/hosts {} -k -u root -m shell -a '{}'".format(n2, n3))
+  return f.read()
