@@ -51,18 +51,14 @@ def ajax_main(request):
         for c in list(command_var):
             #command_dic[c.id] = c.cmd
             data[c.id] = c.cmd
-
     print data
-
     ## JsonResponse takes dict not json
     return JsonResponse(data, content_type="application/json")
-    #return HttpResponse(json.dumps(data), content_type="application/json")
 
 def ajax_run(request):
-    print 'ajax_run:', request.GET.items()
+    #print 'ajax_run:', request.GET.items()
     #ajax_run: [(u'command_val', u'4'), (u'server_val', u'1'), (u'client_val', u'1')]
     data = get_ajax(request.GET.items())
-    #data = "for example lsvg output as a text"
     return HttpResponse(data, content_type='text/plain')
 
 def test(request):

@@ -59,7 +59,14 @@ class DbLog(models.Model):
 	cmd_output = models.TextField()
 	run_time = models.DateTimeField(default = timezone.now)
 	
-	# def ?
+
+class DbLdap(models.Model):
+  id = models.AutoField(primary_key=True)
+  user_email = models.CharField(max_length=40, null=False)
+  userdn = models.CharField(max_length=40, null=False)
+  is_admin = models.BooleanField(default=False)
+  def __str__(self):
+    return self.user_email
 
 # more about models
 #http://djangobook.com/advanced-models/
