@@ -6,7 +6,7 @@ urlpatterns = [
     #url(r'^login/$', auth_views.login, {'template_name': 'webapp/login.html'}, name='login'),
     url(r'^login/$', auth_views.login, name='login'),
     #url(r'^$', views.main, name='main'),
-    url(r'^$', account_redirect, 'account-redirect'),
+    url(r'^webapp/$', views.main, name='main'),
     url(r'^ajax_main/$', views.ajax_main, name='ajax_main'),
     url(r'^ajax_run/$', views.ajax_run, name='ajax_run'),
     url(r'about/$', views.about, name='about'),

@@ -6,18 +6,12 @@ from webapp.models import DbClient, DbSystem, DbServer, DbCommand
 
 from ansible_django.ans_exe import get_ajax
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-
 import datetime
 import json
 
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
-@login_required
-def account_redirect(request):
-    return redirect('main', pk=request.user.pk, name=request.user.username)
 
 def main(request):
     #return render(request, 'webapp/main.html')

@@ -11,11 +11,23 @@
   </head>
 
   <body>
-    <h2>Login</h2>
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Login</button>
+      <div id="main">
+        <div id="login">
+          <div class="form-group">
+            <p>
+            <label for="id_username">Intranet email:</label> <input class="form-control" autofocus="" id="id_username" maxlength="254" name="username" type="text" required />
+            </p>
+          </div>
+          <div class="form-group">
+            <p>
+            <label for="id_password">Intranet password:</label> <input class="form-control" id="id_password" name="password" type="password" required />
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </div>
     </form>
   </body>
 </html>
