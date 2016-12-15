@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 
 from webapp.models import DbClient, DbSystem, DbServer, DbCommand
@@ -9,22 +10,84 @@ from ansible_django.ans_exe import get_ajax
 import datetime
 import json
 
+
+# http://stackoverflow.com/questions/35805635/after-authentication-its-not-redirecting-to-next-page-in-django
+# https://codedump.io/share/WsUv4qLpNA2w/1/django---login-and-redirect-to-user-profile-page
+# https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos-built-in-login-system.html
+
+# AUTH
+# https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication
+
+# KEEP SESSION
+# https://docs.djangoproject.com/en/1.10/topics/http/sessions/
+# https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Sessions
+
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
+
+
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
+USERNAME = ""
 
+def login_auth(request):
+  next = request.POST.get('next', request.GET.get('next', ''))
+  if request.method == "POST":
+      username = request.POST.get('username')
+      print username
+      password = request.POST.get('password')
+      print password
+      user = auth.authenticate(username=username, password=password)
+      print "USER", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
+      #user = "dupa"
+      if user != None:
+
+          # needed in main() to display logged user, if main view will be refreshed then user disappear - HOW TO FIX?
+          global USERNAME
+          USERNAME = user
+
+          if user.is_active:
+              login(request, user)
+              if next:
+                  return HttpResponseRedirect(next)
+              return HttpResponseRedirect('/webapp')
+          else:
+              return HttpResponse('Inactive user')
+      else:
+          return HttpResponseRedirect('/')       
+          #return HttpResponseRedirect(settings.LOGIN_URL)      # by default settings.LOGIN_URL = '/accounts/login/'
+  return render(request, "webapp/login.html")
+
+def logout_auth(request):
+    auth.logout(request)
+    # Redirect back to login page
+    return HttpResponseRedirect(settings.LOGIN_URL)
+
+#@login_required
 def main(request):
-    #return render(request, 'webapp/main.html')
-    client_var = DbClient.objects.all()           # all() -> SELECT * FROM
-    system_var = DbSystem.objects.all()
-    server_var = DbServer.objects.all()
+    print request
+    print request.user.is_authenticated
+    if not request.user.is_authenticated:
+        print "if"
+        return redirect('/', request.path)
+        #return HttpResponseRedirect('/')
+        #return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+        #return render(request, 'myapp/login_error.html')
+    else:
+        print "else"
+        client_var = DbClient.objects.all()           # all() -> SELECT * FROM
+        system_var = DbSystem.objects.all()
+        server_var = DbServer.objects.all()
 
-    # csrf_token related
-    # main.html: to display which client was selected added: name="client_num"
+        # csrf_token related
+        # main.html: to display which client was selected added: name="client_num"
 
-    #print client_var, type(client_var)
-    context = {'client': client_var, 'system': system_var, 'server': server_var}  # system: aix/rhel -> not needed to display, only example
-    return render(request, 'webapp/main.html', context)
+        #print client_var, type(client_var)
+        context = {'client': client_var, 'system': system_var, 'server': server_var, 'user': USERNAME}
+        return render(request, 'webapp/main.html', context)
 
 def ajax_main(request):
 

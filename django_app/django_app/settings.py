@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'webapp',
-    'personal',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -136,5 +135,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_URL = '/static/'
-
-LOGIN_REDIRECT_URL = '/webapp/'
+#LOGIN_REDIRECT_URL = '/'
