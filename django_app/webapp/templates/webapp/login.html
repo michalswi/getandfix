@@ -9,19 +9,14 @@
     <meta name="viewport" content = "width=device-width, initial-scale=1.0">
     <title>Login page</title>
   </head>
+
   <body>
-    <div id="main">
-      <div id="login">
-		  <div class="form-group">
-			<label for="exampleInputName2">Intranet Name</label>
-			<input type="text" class="form-control" id="exampleInputName2" placeholder="intranet name">
-		  </div>
-		  <div class="form-group">
-			<label for="exampleInputEmail2">Password</label>
-			<input type="password" class="form-control" id="exampleInputEmail2" placeholder="intranet password">
-		  </div>
-		  <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-    </div>
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
   </body>
 </html>
+
