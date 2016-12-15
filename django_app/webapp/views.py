@@ -12,6 +12,9 @@ import json
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
+def index(request):
+    return render(request, 'webapp/login.html')
+
 def main(request):
     #return render(request, 'webapp/main.html')
     client_var = DbClient.objects.all()           # all() -> SELECT * FROM
