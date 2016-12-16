@@ -26,12 +26,37 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-
+from django.contrib.auth.models import User
 
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
 USERNAME = ""
+
+def f(u, p):
+  print u, p
+  return True
+
+# auth.authenticate(username=username, password=password)
+# https://docs.djangoproject.com/en/1.10/topics/auth/customizing/
+class MyBackend(object):
+  def authenticate(self, username=None, password=None):
+    #login_valid = True
+    #pwd_valid = True
+    #if login_valid and pwd_valid:
+    if f(username, password):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            # Create a new user. There's no need to set a password
+            # because only the password from settings.py is checked.
+            user = User(username=username)
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+        return user
+    return None
+
 
 def login_auth(request):
   next = request.POST.get('next', request.GET.get('next', ''))
@@ -40,7 +65,10 @@ def login_auth(request):
       print username
       password = request.POST.get('password')
       print password
-      user = auth.authenticate(username=username, password=password)
+
+      
+      #user = auth.authenticate(username=username, password=password)
+      user = MyBackend().authenticate(username=username, password=password)
       print "USER", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
       #user = "dupa"
       if user != None:
