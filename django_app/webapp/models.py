@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
-import datetime
+
 
 # https://docs.djangoproject.com/en/1.10/topics/db/models/
 # https://docs.djangoproject.com/en/1.9/ref/models/fields/
@@ -63,8 +63,15 @@ class DbLog(models.Model):
 class DbLdap(models.Model):
   id = models.AutoField(primary_key=True)
   user_email = models.CharField(max_length=40, null=False)
-  userdn = models.CharField(max_length=40, null=False)
+  userdn = models.CharField(max_length=80, null=False)
   is_admin = models.BooleanField(default=False)
+  is_active = models.BooleanField(default=True)
+  is_staff = models.BooleanField(default=False)
+
+  #last_login = models.DateTimeField(default=timezone.now, blank=True)
+  last_login = models.DateTimeField(default=timezone.now)
+
+
   def __str__(self):
     return self.user_email
 

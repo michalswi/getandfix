@@ -6,6 +6,7 @@ from django.template import RequestContext, loader
 from webapp.models import DbClient, DbSystem, DbServer, DbCommand
 
 from ansible_django.ans_exe import get_ajax
+from ldap_stuff.use_ldap import run_main
 
 import datetime
 import json
@@ -28,6 +29,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth.models import User
 
+from webapp.models import DbLdap
+
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
@@ -36,44 +39,29 @@ USERNAME = ""
 def f(u, p):
   print u, p
   return True
-
+ 
 # auth.authenticate(username=username, password=password)
 # https://docs.djangoproject.com/en/1.10/topics/auth/customizing/
 class MyBackend(object):
   def authenticate(self, username=None, password=None):
-    #login_valid = True
-    #pwd_valid = True
-    #if login_valid and pwd_valid:
-    if f(username, password):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            # Create a new user. There's no need to set a password
-            # because only the password from settings.py is checked.
-            user = User(username=username)
-            user.is_staff = True
-            user.is_superuser = True
-            user.save()
+    #if f(username, password):
+    if run_main(username, password):
+        # run_main checks first in DbLdap if user is there (based on email) if not will add
+        user = DbLdap.objects.get(user_email=username)
         return user
     return None
-
 
 def login_auth(request):
   next = request.POST.get('next', request.GET.get('next', ''))
   if request.method == "POST":
       username = request.POST.get('username')
-      print username
       password = request.POST.get('password')
-      print password
-
-      
       #user = auth.authenticate(username=username, password=password)
       user = MyBackend().authenticate(username=username, password=password)
       print "USER", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
-      #user = "dupa"
       if user != None:
 
-          # needed in main() to display logged user, if main view will be refreshed then user disappear - HOW TO FIX?
+          # needed in main() to display logged user
           global USERNAME
           USERNAME = user
 
@@ -92,20 +80,15 @@ def login_auth(request):
 def logout_auth(request):
     auth.logout(request)
     # Redirect back to login page
-    return HttpResponseRedirect(settings.LOGIN_URL)
+    #return HttpResponseRedirect(settings.LOGIN_URL)
+    return HttpResponseRedirect('/')
 
-#@login_required
 def main(request):
-    print request
+    print "request:", request
     print request.user.is_authenticated
+    #user.is_authenticated is by default TRUE
     if not request.user.is_authenticated:
-        print "if"
-        return redirect('/', request.path)
-        #return HttpResponseRedirect('/')
-        #return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-        #return render(request, 'myapp/login_error.html')
-    else:
-        print "else"
+        print "else main"
         client_var = DbClient.objects.all()           # all() -> SELECT * FROM
         system_var = DbSystem.objects.all()
         server_var = DbServer.objects.all()
@@ -116,6 +99,13 @@ def main(request):
         #print client_var, type(client_var)
         context = {'client': client_var, 'system': system_var, 'server': server_var, 'user': USERNAME}
         return render(request, 'webapp/main.html', context)
+
+    else:
+        print "if main"
+        return redirect('/', request.path)
+        #return HttpResponseRedirect('/')
+        #return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+        #return render(request, 'myapp/login_error.html')
 
 def ajax_main(request):
 

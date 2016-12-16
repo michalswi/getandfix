@@ -11,5 +11,4 @@ urlpatterns = [
     #url(r'^$', webapp.views.logout_auth), 
     url(r'^webapp/', include('webapp.urls')),         # webapp as a main page, /$ nothing more than webapp/..
     url(r'^admin/', admin.site.urls),
-    #url(r'^webapp/', include('webapp.urls')),	    
 ]
