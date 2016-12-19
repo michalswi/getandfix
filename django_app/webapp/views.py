@@ -25,11 +25,14 @@ import json
 
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth.models import User
 
 from webapp.models import DbLdap
+
+from django.views.decorators.cache import cache_control
+
+from django.contrib.auth.decorators import login_required
 
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
@@ -52,6 +55,7 @@ class MyBackend(object):
     return None
 
 def login_auth(request):
+  print "#login_auth"
   next = request.POST.get('next', request.GET.get('next', ''))
   if request.method == "POST":
       username = request.POST.get('username')
@@ -80,10 +84,12 @@ def login_auth(request):
 def logout_auth(request):
     auth.logout(request)
     # Redirect back to login page
-    #return HttpResponseRedirect(settings.LOGIN_URL)
-    return HttpResponseRedirect('/')
+    #return HttpResponseRedirect('/')
+    return render(request, "webapp/logout.html")
 
+@login_required
 def main(request):
+    print "#main"
     print "request:", request
     print request.user.is_authenticated
     #user.is_authenticated is by default TRUE
