@@ -46,39 +46,63 @@ def f(u, p):
 # auth.authenticate(username=username, password=password)
 # https://docs.djangoproject.com/en/1.10/topics/auth/customizing/
 class MyBackend(object):
-  def authenticate(self, username=None, password=None):
+  def authenticate(self, email=None, password=None):
     #if f(username, password):
-    if run_main(username, password):
+    if run_main(email, password):
         # run_main checks first in DbLdap if user is there (based on email) if not will add
-        user = DbLdap.objects.get(user_email=username)
+        user = DbLdap.objects.get(user_email=email)
         return user
     return None
 
+  #http://blackglasses.me/2013/10/08/custom-django-user-model-part-2/
+  #http://stackoverflow.com/questions/5376985/django-request-user-is-always-anonymous-user
+  def get_user(self, user_id):
+    print "user_id", user_id
+    user = DbLdap.objects.get(id=user_id)
+    print "user.is_active", user.is_active
+    print "user.user_email", user.user_email
+    if user.is_active:
+      return user
+    return None
+
+
 def login_auth(request):
   print "#login_auth"
+  print "REQ:", request
   next = request.POST.get('next', request.GET.get('next', ''))
+
   if request.method == "POST":
       username = request.POST.get('username')
       password = request.POST.get('password')
+
       #user = auth.authenticate(username=username, password=password)
-      user = MyBackend().authenticate(username=username, password=password)
+      user = MyBackend().authenticate(email=username, password=password)
       print "USER", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
-      if user != None:
+      if user is not None:
 
           # needed in main() to display logged user
           global USERNAME
           USERNAME = user
 
+          # Redirect to a success page.  
           if user.is_active:
+              print "active?"
               login(request, user)
               if next:
+                  print "if next"
                   return HttpResponseRedirect(next)
-              return HttpResponseRedirect('/webapp')
+              else:
+                  print "redirect active"
+                  # after successful log in
+                  return HttpResponseRedirect('/webapp')
+          # Return an 'invalid login' error message.
           else:
+              print "inactive"
               return HttpResponse('Inactive user')
       else:
-          return HttpResponseRedirect('/')       
-          #return HttpResponseRedirect(settings.LOGIN_URL)      # by default settings.LOGIN_URL = '/accounts/login/'
+          return HttpResponseRedirect('/')
+          # by default settings.LOGIN_URL = '/accounts/login/'
+          #return HttpResponseRedirect(settings.LOGIN_URL)
   return render(request, "webapp/login.html")
 
 def logout_auth(request):
@@ -87,14 +111,27 @@ def logout_auth(request):
     #return HttpResponseRedirect('/')
     return render(request, "webapp/logout.html")
 
-@login_required
+# is_authenticated, problem with cookies?!
+# http://stackoverflow.com/questions/39431972/request-user-is-authenticated-consistently-returns-false-django
+#http://stackoverflow.com/questions/39431386/angular2-and-django-csrf-token-headache/39436142?noredirect=1#comment66195079_39436142
+
+#login_url = '/'                -> requests are redirected for login, by default /accounts/login/
+#redirect_field_name="/webapp/" -> requests are redirected after login, by default /accounts/profile
+#@login_required(login_url = '/')
 def main(request):
     print "#main"
+    print "request.user.is_anonymous():", request.user.is_anonymous()
+    user = MyBackend().get_user(11)
     print "request:", request
-    print request.user.is_authenticated
-    #user.is_authenticated is by default TRUE
+    print "user:", request.user
+    print request.user.is_active
+    print request.user.is_authenticated()
+    print "user.id:", user.id
+
+    #user.is_authenticated is by default TRUE for real User, for Anonymous is False
     if not request.user.is_authenticated:
-        print "else main"
+        print request.user.is_authenticated
+        print "if main"
         client_var = DbClient.objects.all()           # all() -> SELECT * FROM
         system_var = DbSystem.objects.all()
         server_var = DbServer.objects.all()
@@ -107,7 +144,7 @@ def main(request):
         return render(request, 'webapp/main.html', context)
 
     else:
-        print "if main"
+        print "else main"
         return redirect('/', request.path)
         #return HttpResponseRedirect('/')
         #return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
