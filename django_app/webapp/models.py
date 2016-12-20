@@ -6,6 +6,12 @@ from django.utils import timezone
 # https://docs.djangoproject.com/en/1.10/topics/db/models/
 # https://docs.djangoproject.com/en/1.9/ref/models/fields/
 
+# more about models
+#http://djangobook.com/advanced-models/
+#https://www.tutorialspoint.com/django/django_models.htm
+#https://tutorial.djangogirls.org/pl/django_models/
+
+
 class DbClient(models.Model):
 	id = models.AutoField(primary_key=True)
 	client_name = models.CharField(max_length=30, null=False)	# CharField -> varchar
@@ -65,18 +71,14 @@ class DbLdap(models.Model):
   user_email = models.CharField(max_length=40, null=False)
   userdn = models.CharField(max_length=80, null=False)
   is_admin = models.BooleanField(default=False)
-  is_active = models.BooleanField(default=True)
-  is_staff = models.BooleanField(default=False)
 
-  #last_login = models.DateTimeField(default=timezone.now, blank=True)
-  last_login = models.DateTimeField(default=timezone.now)
-
+  # needed if DbLdap instead of User
+  #is_active = models.BooleanField(default=True)
+  #is_staff = models.BooleanField(default=False)
+  #is_authenticated = models.BooleanField(default=False)
+  #is_anonymous = models.BooleanField(default=False)
+  #last_login = models.DateTimeField(default=timezone.now)
 
   def __str__(self):
     return self.user_email
-
-# more about models
-#http://djangobook.com/advanced-models/
-#https://www.tutorialspoint.com/django/django_models.htm
-#https://tutorial.djangogirls.org/pl/django_models/
 
