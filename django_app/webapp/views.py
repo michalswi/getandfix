@@ -15,6 +15,10 @@ from django.contrib.auth.decorators import login_required
 from . import backend
 from django.views.decorators.cache import cache_control
 
+#handler
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
 
@@ -140,3 +144,10 @@ def about(request):
     t = loader.get_template('webapp/about.html')
     c = RequestContext(request)
     return HttpResponse(t.render(c))
+
+# TO DO handlers
+def page_not_found(request):
+    response = render_to_response('webapp/404.html', context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
