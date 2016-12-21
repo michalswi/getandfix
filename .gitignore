@@ -11,3 +11,6 @@ django_app/webapp/ansible_django/os/.vagrant
 django_app.zip
 django_app/webapp/ldap_stuff/*
 django_app/webapp/*.pyc
+webserver/web_vagrant/.vagrant
+dbserver/.vagrant
+webserver/web_docker/.vagrant

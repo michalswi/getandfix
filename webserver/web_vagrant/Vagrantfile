@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$script = <<SCRIPT
+yum install -y python-setuptools
+yum install -y python-ldap.x86_64
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python get-pip.py
+pip install gunicorn
+yum install -y epel-release
+yum install -y nginx
+pip install django
+pip install django_extensions
+yum install -y unzip
+yum install -y MySQL-python
+yum install -y mariadb-server mariadb
+yum install -y openldap.x86_64
+yum install -y openldap-clients.x86_64
+firewall-cmd --zone=public --add-port=8000/tcp --permanent
+firewall-cmd --reload
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.network "private_network", ip: "192.168.33.33"
+  config.vm.define "webser"
+  config.vm.hostname = "webser.example.com"
+  config.vm.provision "shell", inline: $script
+  config.vm.provider "libvirt" do |l|
+    l.memory = 256
+    l.cpus = 1
+  end
+end
