@@ -16,6 +16,7 @@ yum install -y MySQL-python
 yum install -y mariadb-server mariadb
 yum install -y openldap.x86_64
 yum install -y openldap-clients.x86_64
+yum install -y ansible
 firewall-cmd --zone=public --add-port=8000/tcp --permanent
 firewall-cmd --reload
 SCRIPT
