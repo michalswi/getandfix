@@ -8,8 +8,8 @@ RUN yum install -y python-setuptools \
 python-ldap.x86_64
 
 # to install nginx you need 'epel-release'
-RUN yum install -y epel-release \
-nginx
+RUN yum install -y epel-release 
+RUN yum install -y nginx
 
 RUN pip install django \
 django_extensions
@@ -26,22 +26,16 @@ net-tools
 RUN yum install -y MySQL-python \
 mariadb-server mariadb
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-#EXPOSE 80
-#EXPOSE 443
-#CMD ["nginx"]
-
 RUN rm -rf /etc/nginx/nginx.conf
 
 ADD nginx.conf /etc/nginx/nginx.conf
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
 ADD django_app /django_app
 
 WORKDIR /django_app
 
 EXPOSE 5000
 CMD ["nginx"]
-CMD ["./start_gun.sh"]
-
-
+#CMD ["./start_gun.sh"]
 
