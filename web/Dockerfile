@@ -9,7 +9,7 @@ python-ldap.x86_64
 
 # to install nginx/ansible you need 'epel-release'
 RUN yum install -y epel-release 
-RUN yum install -y nginx
+#RUN yum install -y nginx
 RUN yum install -y ansible
 
 RUN pip install django \
@@ -25,20 +25,11 @@ net-tools
 RUN yum install -y MySQL-python \
 mariadb-server mariadb
 
-RUN rm -rf /etc/nginx/nginx.conf
+#RUN rm -rf /etc/nginx/nginx.conf
 
-ADD nginx.conf /etc/nginx/nginx.conf
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+#ADD nginx.conf /etc/nginx/nginx.conf
+#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 ADD django_app /django_app
 
 WORKDIR /django_app
-
-## run multiple app/service
-#1 CMD/ENTRYPOINT
-EXPOSE 5000
-CMD ["nginx"]
-# to run multiple scripts
-#ADD run.sh /
-#CMD ["./run.sh"]
-#2 DOCKER COMPOSE -> docker-compose.yml
