@@ -1,13 +1,15 @@
 version: '2'
 services:
   web:
+    container_name: web
     build: ./web/
     expose:
       - "8080"
     command: ./start_gun.sh
   nginx:
+    container_name: nginx
     build: ./nginx/
     ports:
       - "5000:8000"
-    links:
-      - web:web
+    depends_on:
+      - web
