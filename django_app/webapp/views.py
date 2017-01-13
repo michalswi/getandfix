@@ -17,7 +17,6 @@ from django.views.decorators.cache import cache_control
 
 #handler
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 
 ##render -> we do not need to specify context_instance = RequestContext(request)
 ##render_to_response() -> we do 
@@ -30,13 +29,15 @@ def login_auth(request):
   next = request.POST.get('next', request.GET.get('next', ''))
   if request.method == "POST":
       username = request.POST.get('username')
+
+      # needed in main() to display logged user, no idea how to do it better..
+      global USERNAME
+      USERNAME=username
+
       password = request.POST.get('password')
+      # backend.py -> use python ldap script
       user = backend.MyBackend().authenticate(username=username, password=password)
-      #print "user:", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
       if user is not None:
-          # needed in main() to display logged user
-          global USERNAME
-          USERNAME = username
           # Redirect to a success page.  
           if user.is_active:
               login(request, user)
@@ -90,6 +91,8 @@ def main(request):
         client_var = DbClient.objects.all()           # all() -> SELECT * FROM
         system_var = DbSystem.objects.all()
         server_var = DbServer.objects.all()
+
+        print "us", request, USERNAME
         # csrf_token related
         # main.html: to display which client was selected added: name="client_num"
         context = {'client': client_var, 'system': system_var, 'server': server_var, 'user': USERNAME}

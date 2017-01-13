@@ -30,13 +30,12 @@ def login_auth(request):
   next = request.POST.get('next', request.GET.get('next', ''))
   if request.method == "POST":
       username = request.POST.get('username')
+      global USERNAME
+      USERNAME=username
       password = request.POST.get('password')
       user = backend.MyBackend().authenticate(username=username, password=password)
       #print "user:", user, type(user)    # USER admin <class 'django.contrib.auth.models.User'>
       if user is not None:
-          # needed in main() to display logged user
-          global USERNAME
-          USERNAME = username
           # Redirect to a success page.  
           if user.is_active:
               login(request, user)

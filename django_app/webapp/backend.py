@@ -25,7 +25,7 @@ class MyBackend(object):
             return None
 
 
-## instead of User use own DB
+## instead of built-in User use own database
 #https://docs.djangoproject.com/en/1.10/topics/auth/customizing/#substituting-a-custom-user-model
 #http://stackoverflow.com/questions/1057149/django-users-and-authentication-from-external-source
 #https://docs.djangoproject.com/en/1.10/howto/auth-remote-user/
