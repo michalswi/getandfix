@@ -25,6 +25,8 @@ SECRET_KEY = ')@=xmyf68pbc#!qcu%st=1p*5+^xu&xs3+zy_hm)+s&*qv!^-_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = []
+#if use docker:
+#ALLOWED_HOSTS = ['<container_ip>']
 
 
 # Application definition
@@ -89,6 +91,7 @@ DATABASES = {
         },
         'NAME': 'myproject',
         'USER': 'myprojectuser',
+        #'USER': 'root',
         'PASSWORD': 'password',
         'HOST': '',
         #'HOST': '192.168.33.66',
@@ -140,5 +143,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_URL = '/static/'
+#vagrant:
 #STATIC_ROOT = '/home/vagrant/django_app/webapp/static'
+#docker:
+#STATIC_ROOT = '/django_app/webapp/static'
 

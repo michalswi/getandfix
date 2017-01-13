@@ -3,17 +3,18 @@
 
 $script = <<SCRIPT
 yum install -y python-setuptools
-yum install -y python-ldap.x86_64
-curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-python get-pip.py
-pip install gunicorn
 yum install -y epel-release
-yum install -y nginx
-pip install django
-pip install django_extensions
-yum install -y unzip
 yum install -y MySQL-python
 yum install -y mariadb-server mariadb
+systemctl start mariadb
+systemctl enable mariadb
+mysqladmin -u root password 'password'
+mysql -u root --password="password" -e "CREATE DATABASE myproject CHARACTER SET UTF8;"
+mysql -u root --password="password" myproject < myproject.sql
+#vagrant
+mysql -u root --password="password" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.33.%' IDENTIFIED BY 'password' WITH GRANT OPTION;"
+#docker
+mysql -u root --password="password" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.18.0.%' IDENTIFIED BY 'password' WITH GRANT OPTION;"
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -21,6 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.33.66"
   config.vm.define "db"
   config.vm.hostname = "db.example.com"
+  config.vm.provision "file", source: "../myproject.sql", destination: "~/myproject.sql"
   config.vm.provision "shell", inline: $script
   config.vm.provider "libvirt" do |l|
     l.memory = 256

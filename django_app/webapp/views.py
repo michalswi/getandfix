@@ -92,7 +92,6 @@ def main(request):
         system_var = DbSystem.objects.all()
         server_var = DbServer.objects.all()
 
-        print "us", request, USERNAME
         # csrf_token related
         # main.html: to display which client was selected added: name="client_num"
         context = {'client': client_var, 'system': system_var, 'server': server_var, 'user': USERNAME}
