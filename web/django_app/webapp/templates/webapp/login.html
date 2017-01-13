@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+  </head>
+
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <div id="main">
+        <div id="login">
+          <div class="form-group">
+            <p>
+            <label for="id_username">Intranet email:</label> <input class="form-control" autofocus="" id="id_username" maxlength="254" name="username" type="text" required />
+            </p>
+          </div>
+          <div class="form-group">
+            <p>
+            <label for="id_password">Intranet password:</label> <input class="form-control" id="id_password" name="password" type="password" required />
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

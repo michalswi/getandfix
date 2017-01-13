@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Main page after successfull login</title>
+        <meta charset="utf-8">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/functions.js' %}"></script>
+
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+
+      <div class="menu">
+      {% block menu %}
+        <nav class="navbar navbar-dark bg-primary">
+          <ul class="nav navbar-nav">
+            <li class="nav-item active">
+              <a href="/webapp" class="nav-link">home</a>
+            </li>
+            <li class="nav-item">
+              <a href="/webapp/about" class="nav-link">about</a>
+            </li>
+            <li class="float-xs-right right">
+              <em> {{ user }} </em>
+              <a href="/logout" class="btn btn-outline-secondary">logout</a>
+            </li/>
+          </ul>
+        </nav>
+          {% endblock menu %}
+      </div>
+      <div id="main">
+        <div class="clear"></div>
+        <div class="right">
+          <div class="preview_div">
+            <span>Command preview</span>
+            <pre id="preview"></pre>
+          </div>
+        </div>
+          <ul id="form-list">
+            <li>
+              <span>Client</span>
+              <select id="client" class="custom-select" name="client_num">
+                <option value="0" selected>select client</option>
+                {% for c in client %}
+                  <option value="{{ c.id }}">{{ c }}</option>
+                {% endfor %}
+              </select>
+            </li>
+            <li>
+              <span>Server</span>
+              <select id="server" class="custom-select" disabled="disabled" name="server_num">
+              </select>
+            </li>
+            <li>
+              <span>Run command</span>
+              <select id="run_command" class="custom-select"  disabled="disabled" name="command_num">
+              </select>
+            </li>
+            <li>
+              <span></span>
+              <button type="button" class="btn btn-primary btn-lg disable" id="run_button">run</button>
+            </li>
+          <li id="li-progress">
+            <span id="command-span">Command progress</span>
+            <progress class="progress progress-striped" value="0" max="100"></progress> 
+          <li id="li-output-label">
+            <span>Output</span>
+          </li>
+          <li id="li-output">
+            <pre> waiting.. </pre>
+          </li>
+        </ul>
+      </div>
+    </body>
+</html>
