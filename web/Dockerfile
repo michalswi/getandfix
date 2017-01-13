@@ -13,5 +13,7 @@ RUN yum install -y bind-utils iproute net-tools
 RUN yum install -y MySQL-python mariadb-server mariadb
 
 ADD django_app /django_app
+ADD settings.py /django_app/django_app/settings.py
+ADD start_gun.sh /django_app/start_gun.sh
 
 WORKDIR /django_app

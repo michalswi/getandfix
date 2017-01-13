@@ -17,8 +17,10 @@ yum install -y mariadb-server mariadb
 yum install -y openldap.x86_64
 yum install -y openldap-clients.x86_64
 yum install -y ansible
-firewall-cmd --zone=public --add-port=8080/tcp --permanent
-firewall-cmd --reload
+systemctl stop firewalld
+systemctl disable firewalld
+#firewall-cmd --zone=public --add-port=8080/tcp --permanent
+#firewall-cmd --reload
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -27,6 +29,11 @@ Vagrant.configure("2") do |config|
   config.vm.define "webser"
   config.vm.hostname = "webser.example.com"
   config.vm.provision "shell", inline: $script
+  config.vm.provision "file", source: "../../django_app", destination: "~/django_app"
+  config.vm.provision "file", source: "./nginx.conf", destination: "/etc/nginx/nginx.conf"
+  config.vm.provision "file", source: "./settings.py", destination: "~/django_app/django_app/settings.py"
+  config.vm.provision "file", source: "./ssl", destination: "~/ssl"
+  config.vm.provision "file", source: "./start_gun.sh", destination: "~/django_app/start_gun.sh"
   config.vm.provider "libvirt" do |l|
     l.memory = 256
     l.cpus = 1
