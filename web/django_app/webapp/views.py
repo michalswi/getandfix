@@ -36,7 +36,7 @@ def login_auth(request):
       if user is not None:
           # needed in main() to display logged user
           global USERNAME
-          USERNAME = user
+          USERNAME = username
           # Redirect to a success page.  
           if user.is_active:
               login(request, user)
