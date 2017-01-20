@@ -10,5 +10,5 @@ ADD ./static /static
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 # CMD/ENTRYPOINT
 CMD ["nginx"]
-EXPOSE 5000
+#EXPOSE 5000
 
