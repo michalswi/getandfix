@@ -17,8 +17,8 @@ vagrant/dbserver/.vagrant
 vagrant/webserver/.vagrant
 vagrant/webserver/django_app
 
-web/django_app/webapp/ansible_django
-web/django_app/webapp/ldap_stuff
-web/django_app/webapp/*.pyc
-web/django_app/webapp/static
-web/django_app/webapp/migrations
+docker/web/django_app/webapp/ansible_django
+docker/web/django_app/webapp/ldap_stuff
+docker/web/django_app/webapp/*.pyc
+docker/web/django_app/webapp/static
+docker/web/django_app/webapp/migrations
