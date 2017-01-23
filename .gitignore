@@ -22,3 +22,5 @@ docker/web/django_app/webapp/ldap_stuff
 docker/web/django_app/webapp/*.pyc
 docker/web/django_app/webapp/static
 docker/web/django_app/webapp/migrations
+
+docker/test
