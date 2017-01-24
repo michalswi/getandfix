@@ -6,7 +6,8 @@ services:
     expose:
       - "8080"
     command: ./start_gun.sh
-
+    links:
+      - db
   nginx:
     container_name: nginx
     build: ./nginx/
@@ -14,3 +15,12 @@ services:
       - "8000:5000"
     depends_on:
       - web
+  db:
+    container_name: mariadb
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=password 
+      - MYSQL_DATABASE=myproject
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+      - ./db/myproject.sql:/docker-entrypoint-initdb.d/myproject.sql

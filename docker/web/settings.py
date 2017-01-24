@@ -79,7 +79,9 @@ DATABASES = {
         'NAME': 'myproject',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '192.168.33.66',
+	# mariadb -> container name
+	'HOST': 'mariadb',
+        #'HOST': '192.168.33.66',
         'PORT': '',
     }
 }
