@@ -1,13 +1,17 @@
 version: '2'
 services:
+
   web:
     container_name: web
     build: ./web/
     expose:
       - "8080"
+    #without 'command:' it will exited after start, solution add 'tail..'
+    #command: tail -f /dev/null
     command: ./start_gun.sh
     links:
       - db
+
   nginx:
     container_name: nginx
     build: ./nginx/
@@ -15,12 +19,25 @@ services:
       - "8000:5000"
     depends_on:
       - web
+
   db:
     container_name: mariadb
     image: mariadb
     environment:
-      - MYSQL_ROOT_PASSWORD=password 
+      - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=myproject
     volumes:
       - ./db/mysql:/var/lib/mysql
       - ./db/myproject.sql:/docker-entrypoint-initdb.d/myproject.sql
+
+  ans_host1:
+    container_name: ans_host1
+    build: ./ans_host1/
+    links:
+      - web
+
+  ans_host2:
+    container_name: ans_host2
+    build: ./ans_host2/
+    links:
+      - web

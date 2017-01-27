@@ -18,7 +18,15 @@ def get_ajax(n):
     f = os.popen("ansible all -i '{},' -u root -m shell -a '{}'".format(get_server_ip, get_command))
   # server_host for docker (no IP in DB)
   else:
-    f = os.popen("ansible all -i '{},' -u root -m shell -a '{}'".format(get_server_host, get_command))
+    #running without playbook
+    #f = os.popen("ansible all -i '{},' -u root -m shell -a '{}'".format(get_server_host, get_command))
+
+    # running in docker. default directory django_app/
+    os.system("ansible-playbook -i '{},' --tags '{}' -u root webapp/ansible_django/deploy.yml".format(get_server_host, get_command))
+    #f = os.popen("ansible-playbook -i '{},' --tags '{}' -u root webapp/ansible_django/deploy.yml".format(get_server_host, get_command))
+    f = os.popen("cat /tmp/'{}'".format(get_command))
+    # running locally, default directory getandfix/
+    #f = os.popen("ansible-playbook -i '{},' --tags '{}' -u root django_app/webapp/ansible_django/deploy.yml".format(get_server_host, get_command))
 
   print f
   return f.read()

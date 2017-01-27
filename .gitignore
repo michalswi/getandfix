@@ -18,4 +18,5 @@ vagrant/webserver/django_app
 
 docker/web/django_app
 docker/db/myproject.sql
+docker/db/mysql
 docker/build.log

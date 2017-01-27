@@ -1,3 +1,41 @@
 ---
-  - name: For tests
-    hosts: test
+  - name: For application tests
+    # if 'hosts test' use hosts from ./hosts file
+    #hosts: test
+    hosts: all
+    # if 'connection local' enabled, it will proceed locally not on remote containers
+    #connection: local
+    tasks:
+      - name: Get vmstat
+        command: vmstat
+        register: vmstat_out
+        #ansible-playbook -i ans_host1, --tags vmstat deploy.yml
+        tags: vmstat
+      - name: Save vmstat  
+        #copy output to file
+        local_action: copy content={{ vmstat_out.stdout }} dest="/tmp/vmstat"
+        tags: vmstat 
+      #ansible-playbook -i ans_host1, deploy.yml
+      - debug: 
+          var: vmstat_out.stdout_lines
+          #msg="dupa dupa"
+
+      - name: Check memory
+        command: free -mh
+        register: free_out
+        tags: 'free -mh'
+      - name: Save memory
+        local_action: copy content={{ free_out.stdout }} dest="/tmp/free -mh"
+        tags: 'free -mh'
+      - debug:
+          var: free_out.stdout_lines
+
+      - name: Check uptime
+        command: hostname         # DO ZMIANY
+        register: uptime_out
+        tags: 'uptime'
+      - name: Save uptime
+        local_action: copy content={{ uptime_out.stdout }} dest="/tmp/uptime"
+        tags: 'uptime'
+      - debug:
+          var: uptime_out.stdout_lines

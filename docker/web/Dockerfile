@@ -12,6 +12,10 @@ RUN yum install -y openldap.x86_64 openldap-clients.x86_64
 RUN yum install -y bind-utils iproute net-tools
 RUN yum install -y MySQL-python mariadb-server mariadb
 
+RUN yum install -y openssh
+ADD test_rsa /root/.ssh/
+ADD test_rsa.pub /root/.ssh/
+
 ADD django_app /django_app
 ADD settings.py /django_app/django_app/settings.py
 ADD start_gun.sh /django_app/start_gun.sh
