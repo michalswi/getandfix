@@ -31,7 +31,7 @@
           var: free_out.stdout_lines
 
       - name: Check uptime
-        command: hostname         # DO ZMIANY
+        command: uptime
         register: uptime_out
         tags: 'uptime'
       - name: Save uptime
