@@ -41,6 +41,7 @@ Of course all files like ssh_keys, ssl_certs are only for tests purposes (rememb
 All you have to do is:
   - copy main django_app/ to web/ directory
   - create db/mysql/ directory
+  - mariadb container use db/myproject.sql, remember to change it you want to use another one (by default it's the same like in getandfix/)
 
 After copied you don't have to change anything in web/django_app/ directory because all necessary files are going to be changed.
 
