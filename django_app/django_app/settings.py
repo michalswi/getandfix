@@ -24,9 +24,10 @@ SECRET_KEY = ')@=xmyf68pbc#!qcu%st=1p*5+^xu&xs3+zy_hm)+s&*qv!^-_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# to handle 404 set DEBUG = False
 ALLOWED_HOSTS = []
 #if use docker:
-#ALLOWED_HOSTS = ['<container_ip>']
+#ALLOWED_HOSTS = ['web']
 
 
 # Application definition

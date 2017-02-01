@@ -21,8 +21,8 @@ RUN mkdir /root/.ssh
 RUN touch /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
 
-COPY test_rsa.pub /tmp/test_rsa.pub
-RUN cat /tmp/test_rsa.pub >> /root/.ssh/authorized_keys
+COPY id_rsa.pub /tmp/id_rsa.pub
+RUN cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
