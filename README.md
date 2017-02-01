@@ -2,7 +2,7 @@
 
 [in progress]
 
-Getandfix is a web app to check (in future could be extended to fix) specific tasks like check CPU, memory, filesystems usage etc. for specific customer and server. App use LDAP to authenticate user.
+Getandfix is a web app to verify (in future could be extended to fix) specific tasks like check CPU, memory, filesystems usage etc. for specific customer and server. App use LDAP to authenticate user.
 
 ### How it works? 
 Please read all before run app.
