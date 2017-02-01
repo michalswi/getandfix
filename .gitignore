@@ -5,7 +5,6 @@
 \#*#
 .*.sw[a-z]
 *.un~
-myproject.sql
 
 django_app/webapp/ansible_django/os/.vagrant
 django_app/webapp/ldap_stuff
