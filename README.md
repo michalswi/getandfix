@@ -7,7 +7,7 @@ Getandfix is a web app to check (in future could be extended to fix) specific ta
 ### How it works? 
 Please read all before run app.
 #### First steps
-Main application (django_app) you can find [here](https://github.com/michalswi/getandfix/tree/read/django_app)
+Main application (django_app) you can find [here](https://github.com/michalswi/getandfix/tree/master/django_app)
 
 First you should install all required packages: TODO
 
@@ -22,19 +22,19 @@ After that you can run django app:
 $ python django_app/manage.py runserver
 ```
 
-[Here](https://github.com/michalswi/getandfix/tree/read/django_app/webapp/ansible_django/os) you can find vagrant machine for tests. Just run `vagrant up` in this dir. VM is already placed in DB.
+[Here](https://github.com/michalswi/getandfix/tree/master/django_app/webapp/ansible_django/os) you can find vagrant machine for tests. Just run `vagrant up` in this dir. VM is already placed in DB.
 
 #### Authentication
 You don't have to create/request any account. I use [here](https://github.com/michalswi/ldap_stuff) LDAP to verify user.
 
-Before run you have to place script [here](https://github.com/michalswi/getandfix/tree/read/django_app/webapp/ldap_stuff) and add to script:
+Before run you have to place script [here](https://github.com/michalswi/getandfix/tree/master/django_app/webapp/ldap_stuff) and add to script:
 ```text
 LDAP_SERVER = 'example.ldap.com'
 LDAP_BASEDN = 'ou=example,o=ldap.com'
 ```
 
 #### Docker
-App is ready to be used by docker. All files you can find [here](https://github.com/michalswi/getandfix/tree/read/docker). 
+App is ready to be used by docker. All files you can find [here](https://github.com/michalswi/getandfix/tree/master/docker). 
 
 Of course all files like ssh_keys, ssl_certs are only for tests purposes (remember to change them). 
 
@@ -67,7 +67,7 @@ If you want to use it somewhere else, just zip docker/.
 For tests you have two containers(already added to DB) ans_host1/2 where as you can see above sshd service is active.
 
 #### Vagrant
-Vagrant part you can find [here](https://github.com/michalswi/getandfix/tree/read/vagrant). Vagrantfile for dbserver is ready but for webserver not yet.
+Vagrant part you can find [here](https://github.com/michalswi/getandfix/tree/master/vagrant). Vagrantfile for dbserver is ready but for webserver not yet.
 
 #### Authors:
 
