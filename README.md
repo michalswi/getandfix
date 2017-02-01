@@ -38,7 +38,9 @@ App is ready to be used by docker. All files you can find [here](https://github.
 
 Of course all files like ssh_keys, ssl_certs are only for tests purposes (remember to change them). 
 
-All you have to do is copy main django_app/ to web/ directory. 
+All you have to do is:
+  - copy main django_app/ to web/ directory
+  - create db/mysql/ directory
 
 After copied you don't have to change anything in web/django_app/ directory because all necessary files are going to be changed.
 
