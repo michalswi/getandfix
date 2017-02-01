@@ -20,3 +20,7 @@ ADD settings.py /django_app/django_app/settings.py
 ADD start_gun.sh /django_app/start_gun.sh
 
 WORKDIR /django_app
+
+#by default ansible use /etc/ansible (you can verify that running ansible --version)
+#export ANSIBLE_CONFIG=/django_app/webapp/ansible_django/ansible.cfg
+ENV ANSIBLE_CONFIG /django_app/webapp/ansible_django/ansible.cfg
